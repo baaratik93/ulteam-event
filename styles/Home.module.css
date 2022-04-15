@@ -2,6 +2,27 @@
   padding: 0 2rem;
 }
 
+.header {
+ /* transform: translateY(-5%);*/
+  background-color: #ec5;
+  display: flex;
+  justify-content: space-between;
+}
+.header nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 50vw;
+}
+.header nav ul li  {
+  background-color: white;
+  list-style: none;
+  padding: .8vw;
+  border-radius: 2rem;
+  margin: auto;
+}
 .main {
   min-height: 100vh;
   padding: 4rem 0;

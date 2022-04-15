@@ -1,0 +1,38 @@
+.form {
+    background-color: rgba(238, 205, 85, 0.63);
+    border-radius: 1rem;
+    width: 68vw;
+    margin: 5rem auto;
+    padding: 1rem;
+}
+.field {
+    width: 65vw;
+    margin: .3rem auto;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    margin: 3% 0;
+
+}
+
+.input,.textarea {
+    height: clamp(2vw,2rem,5vw);
+    text-align: center;
+    outline: 0;
+    border:0;
+    border-bottom: 1px solid rgb(136, 140, 141);
+    background-color: transparent;
+}
+.textarea {
+    height: auto !important;
+    text-align: start;
+}
+.input:focus, .textarea:focus{
+    outline:1px solid blue;
+    outline-offset: .3rem;
+    border: 0;
+    border-radius: 1rem;
+}
