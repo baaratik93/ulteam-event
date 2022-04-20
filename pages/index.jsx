@@ -1,54 +1,47 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import {useEffect,useState} from 'react'
-import styles from '../styles/Home.module.css'
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../utils/firebase'
-import Link from 'next/link'
+import fakeEvents from '../utils/fakeEvents';
+import {Container, SimpleGrid, Heading, VStack} from '@chakra-ui/react'
+import SingleEvent from '../components/events/SingleEvent'
 
+export const getServerSideProps = async () => {
+  
+  const responses = await fetch('http://localhost:3000/api/events/events').then(data => {
+    return data.json()
+  }).catch(error => {
+    throw error
+  })
+  return {
+   props: {
+     events: responses
+   }
+ }
 
+  
+}
 
-export default function Home() {
-  const [events, setEvents] = useState([]);
-  async function SerializeEvents() {
-    const querySnapshot = await getDocs(collection(db, "events"));
-    const e = []
-    querySnapshot.forEach((doc) => {
-      e.push({
-        id: doc.id,
-        ...doc.data()
-      })
-    });
-    setEvents(e);
-  }
-  useEffect(() => {
-    SerializeEvents()
-  }, []);
-  return (
-    <div className={styles.container}>
+export default function Home({events}) {
+ 
+  return <VStack>
       <Head>
         <title>ULTeam | A la une</title>
         <meta name="description" content="L'une des meilleurs canaux de la publicité" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Bienvenue sur <a href="/">ULTeam events</a>
-        </h1>
+        <Heading m="1rem" textAlign='center' color="green">
+          A la une des événements sur ULTEAMEVENTS
+        </Heading>
+      <SimpleGrid gap={3} gridTemplateColumns={
+        ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr']
+      }>
             {
                 events.map(event => {
                   // Sans le return le contenue du ul ne sera pas visible
-                 return (<ul key={event.title}>
-                    <li className={styles.title}><Link href={`http://localhost:3000/events/`+ event.id}> {event.title}</Link></li>
-                    <li>{event.description}</li>
-                    <li>{event.location}</li>
-                    <li>{event.moment}</li>
-                  </ul>) 
+                 return <SingleEvent key={event.id} event={event}/>
+                  
                 })
               }
-      </main>
+      </SimpleGrid>
       
-    </div>
-  )
+      </VStack>
 }

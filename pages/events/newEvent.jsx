@@ -1,51 +1,72 @@
-import form from '../../styles/form.module.css'
 import { useRef, useState, useEffect } from "react";
 import { db } from '../../utils/firebase'
 import { collection, addDoc } from "firebase/firestore";
+import {FormControl,Input,FormLabel,Textarea, VStack, Text} from '@chakra-ui/react'
+import CustomFormControl from '../../components/customized/CustFormControl'
 
 const newEvent = () => {
     const refTitle = useRef();
     const refDescription = useRef();
     const refLocation = useRef();
     const refMoment = useRef();
-   async function submitEvent (e) {
+    async function submitEvent (e) {
         e.preventDefault();
-        try {
-            const docRef = await addDoc(collection(db, "events"), {
-                title: refTitle.current.value,
-                description: refDescription.current.value,
-                location: refLocation.current.value,
-                moment: refMoment.current.value,
-              });
-              console.log("Evénement jouté avec succees: référence:", docRef.id);
-               } catch (error) {
-            console.log(error);
-        }
+        const ev = {
+            title: refTitle.current.value,
+            description: refDescription.current.value,
+            location: refLocation.current.value,
+            moment: new Date(refMoment.current.value),
+          }
+        const AddedEvent = await fetch("/api/events/addNew", {
+            method: 'POST',
+            body: JSON.stringify(ev),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(data => data.json())
+        .then(evented => evented)
+        .catch(error => {throw error})
+        // try {
+            // const docRef = await addDoc(collection(db, "events"), {
+            //     title: refTitle.current.value,
+            //     description: refDescription.current.value,
+            //     location: refLocation.current.value,
+            //     moment: refMoment.current.value,
+            //   });
+        //       console.log("Evénement jouté avec succees: référence:", docRef.id);
+        //        } catch (error) {
+        //     console.log(error);
+        // }
     }
-return <form className={form.form} method="post" onSubmit={submitEvent}>
-            <div className={form.field}>
-                <label className={form.label} htmlFor="title">Titre de l'événement</label>
-                <input type="text" className={form.input} ref={refTitle} />
-            </div>
-            <div className={form.field}>
-                <label className={form.label} htmlFor="description">Description de l'événement</label>
-                <textarea rows="5" aria-multiline className={form.textarea} ref={refDescription} />
-            </div>
+return <> <form method="post" onSubmit={submitEvent} mt='xl'>
+            <CustomFormControl>
+                <FormLabel  htmlFor="title">Titre de l'événement</FormLabel>
+                <Input type="datetime"  ref={refTitle} />
+            </CustomFormControl>
+            <CustomFormControl>
+                <FormLabel  htmlFor="description">Description de l'événement</FormLabel>
+                <Textarea rows="5" aria-multiline ref={refDescription} />
+            </CustomFormControl>
 
-            <div className={form.field}>
-                <label className={form.label} htmlFor="location">Lieu de l'événement</label>
-                <input type="text" className={form.input} ref={refLocation} />
-            </div>
+            <CustomFormControl>
+                <FormLabel htmlFor="location">Lieu de l'événement</FormLabel>
+                <Input type="text" ref={refLocation} />
+            </CustomFormControl>
 
-            <div className={form.field}>
-                <label className={form.label} htmlFor="moment">Date/Heure de l'événement</label>
-                <input type="date" className={form.input} ref={refMoment} />
-            </div>
+            <CustomFormControl>
+                <FormLabel htmlFor="moment">Date/Heure de l'événement</FormLabel>
+                <Input type="date" ref={refMoment} />
+            </CustomFormControl>
             
-            <div className={form.field}>
-                <input type="submit" value="Enrégistrer" />
-            </div>
+            <FormControl m="10px auto" w={
+                ['50%', '40%','30%']
+            }>
+                <Input  bg="whatsapp.600" fontSize="20px" fontWeight='bold' type="submit" value="Valider" />
+            </FormControl>
+            
         </form>
+        </>
 }
 
 export default newEvent

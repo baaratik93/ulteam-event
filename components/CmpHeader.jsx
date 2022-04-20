@@ -1,20 +1,36 @@
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
+import NextLink from 'next/link';
+import DarkMode from './DarkModeSwitch';
+import { PhoneIcon } from '@chakra-ui/icons'
+import {
+	Button,
+	Box,
+	HStack,
+	Spacer,
+	Heading,
+	Link
+  } from '@chakra-ui/react'
+import HamburgerMenu from './HamburgerMenu'
+import ListMenu from './ListMenu'
+import styled from '@emotion/styled'
+
+const styleHeader = styled.div(`
+  position: sticky;
+  top:0;
+  z-index:100;
+`)
+ 
 function CmpHeader() {
-	return <header className={styles.header}>
-				<Link href="/">
-					<a><h1>Ulteam-events</h1></a>
-				</Link>
-				<nav>
-					<ul>
-						<li><Link href="/"><a>A la une</a></Link></li>
-						<li><Link href="/events"><a>Evénements</a></Link></li>
-						<li><Link href="/events"><a>Téléchargements</a></Link></li>
-						<li><Link href="/events"><a>Favories</a></Link></li>
-						<li><Link href="/events"><a>Gallery</a></Link></li>
-					</ul>
-				</nav>
-			</header>
+	return <HStack as={styleHeader} p={4} bg='orange.900'>
+				<NextLink href="/">
+					<Link><Heading color='orange'>ULTEAMEVENTS</Heading></Link>
+				</NextLink>
+				<Spacer/>
+				<ListMenu/>
+				<Spacer/>
+				<DarkMode/>
+				<Button rightIcon={<PhoneIcon/>} bg='orange'>Login</Button>
+				<HamburgerMenu/>
+			</HStack>
 }
 
 export default CmpHeader
