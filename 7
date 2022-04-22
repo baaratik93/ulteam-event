@@ -1,0 +1,22 @@
+// Next JS related
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import {FormControl, Heading, VStack, FormLabel, Input} from '@chakra-ui/react'
+import CustFormControl from '../../components/customized/CustFormcontrol.jsx'
+function Login() {
+    return <>
+		<Head>
+		</Head>
+		<Heading>Login</Heading>
+		<CustFormControl>
+			<FormLabel>E-mail</FormLabel>
+			<Input type="text" id="email" />
+		</CustFormControl>
+		<CustFormControl>
+		  	<FormLabel>Mot de passe</FormLabel>
+			<Input type="password" id="password"/>
+		</CustFormControl>
+	   </>
+}
+
+export default Login

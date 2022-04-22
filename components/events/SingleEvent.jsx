@@ -1,8 +1,20 @@
 import NextLink from 'next/link'
-import { Flex, VStack,HStack, Box,Link,Image,Text, ColorMode } from '@chakra-ui/react'
-import { LockIcon} from '@chakra-ui/icons'
-function SingleEvent({event}){
+import { Flex,
+	 VStack,
+	 HStack, 
+	 useColorMode,
+	 Box, 
+	 Link,
+	 Image,
+	 Text } from '@chakra-ui/react'
 
+
+function SingleEvent({event}){
+	const { colorMode } = useColorMode()
+	const cardBackground = {
+		dark: 'teal.500',
+		light: 'teal.300'
+		}
    return  <Flex
               p={3}
               as={VStack}
@@ -11,13 +23,14 @@ function SingleEvent({event}){
               boxShadow='xl'
               >
                 <Image w='65%' src={event.image}/>
-                <NextLink
-                    href={`http://localhost:3000/events/`+ event.id}
-                    > 
+    
+		<NextLink
+                  href={`http://localhost:3000/events/`+ event.id}
+                 > 
                     <Link
                         color='green.500'
                         borderBottom='1px solid teal'
-                        // p={1}
+                        //p={1}
                         textAlign='center'
                         fontWeight='bold'
                         fontSize={
@@ -33,11 +46,13 @@ function SingleEvent({event}){
                 </NextLink>
 
                 <Text
-                p={3} 
+                p={3}
                 borderRadius={10} 
-                maxH='3xl' 
-                bg={ColorMode == 'dark' ? 'green' : 'teal'}
-                textAlign='center' fontSize={['10px','12px','14px']}>
+                maxH='3xl'
+  		background={ cardBackground[colorMode] }              
+                textAlign='center'
+		fontSize={['10px','12px','14px']}
+		>
                     {event.description}
                 </Text>
 

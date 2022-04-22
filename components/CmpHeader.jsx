@@ -7,7 +7,8 @@ import {
 	HStack,
 	Spacer,
 	Heading,
-	Link
+	Link,
+	useColorMode
   } from '@chakra-ui/react'
 import HamburgerMenu from './HamburgerMenu'
 import ListMenu from './ListMenu'
@@ -20,15 +21,24 @@ const styleHeader = styled.div(`
 `)
  
 function CmpHeader() {
-	return <HStack as={styleHeader} p={4} bg='orange.900'>
+	const {colorMode} = useColorMode()
+	const headerBg = {
+		dark: 'teal.700',
+		light: 'teal.300'
+	}
+	const LogoBG = {
+		dark: 'orange.300',
+		light: 'orange'
+	}
+	return <HStack as={styleHeader} p={4} bg={headerBg[colorMode]}>
 				<NextLink href="/">
-					<Link><Heading color='orange'>ULTEAMEVENTS</Heading></Link>
+					<Link><Heading color={LogoBG[colorMode]}>ULTEAMEVENTS</Heading>					       </Link>
 				</NextLink>
 				<Spacer/>
 				<ListMenu/>
 				<Spacer/>
 				<DarkMode/>
-				<Button rightIcon={<PhoneIcon/>} bg='orange'>Login</Button>
+				<Button rightIcon={<PhoneIcon/>} bg={LogoBG[colorMode]}><NextLink href="/auth/login">Login</NextLink></Button>
 				<HamburgerMenu/>
 			</HStack>
 }

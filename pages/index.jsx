@@ -2,7 +2,7 @@ import Head from 'next/head'
 import fakeEvents from '../utils/fakeEvents';
 import {Container, SimpleGrid, Heading, VStack} from '@chakra-ui/react'
 import SingleEvent from '../components/events/SingleEvent'
-
+import ev from '../utils/fakeEvents'
 export const getServerSideProps = async () => {
   
   const responses = await fetch('http://localhost:3000/api/events/events').then(data => {
@@ -12,7 +12,7 @@ export const getServerSideProps = async () => {
   })
   return {
    props: {
-     events: responses
+     events: await ev
    }
  }
 
