@@ -13,6 +13,8 @@ import {
 import HamburgerMenu from './HamburgerMenu'
 import ListMenu from './ListMenu'
 import styled from '@emotion/styled'
+import useAuth from '../hook/AuthContext';
+import Logout from './Logout'
 
 const styleHeader = styled.div(`
   position: sticky;
@@ -21,6 +23,7 @@ const styleHeader = styled.div(`
 `)
  
 function CmpHeader() {
+	const { user } = useAuth()
 	const {colorMode} = useColorMode()
 	const headerBg = {
 		dark: 'teal.700',
@@ -38,7 +41,10 @@ function CmpHeader() {
 				<ListMenu/>
 				<Spacer/>
 				<DarkMode/>
+				{ user ?
+				<Logout/> :
 				<Button rightIcon={<PhoneIcon/>} bg={LogoBG[colorMode]}><NextLink href="/auth/login">Login</NextLink></Button>
+				}
 				<HamburgerMenu/>
 			</HStack>
 }

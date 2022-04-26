@@ -1,20 +1,24 @@
 import Layout from '../components/Layout'
 import theme from '../theme.js'
 import {ChakraProvider, ColorModeProvider, useColorMode,} from '@chakra-ui/react'
+import { app } from '../utils/firebase'
+import { AuthProvider } from '../hook/AuthContext';
+app;
 function MyApp({ Component, pageProps }) {
   return   <ChakraProvider theme={theme} resetCSS>
-		<Layout>
-		<ColorModeProvider options={
-			{
-			    initialColorMode: 'light',
-			    useSystemColorMode: true
-			}
-		}>
-		     
-			<Component {...pageProps} />
-		     
-		</ColorModeProvider>
-		</Layout>
+	   		   <AuthProvider>
+					<Layout>
+						<ColorModeProvider options={
+							{
+								initialColorMode: 'light',
+								useSystemColorMode: true
+							}
+						}>
+								<Component {...pageProps} />
+				
+						</ColorModeProvider>
+					</Layout>
+				</AuthProvider>
 	    </ChakraProvider>
 }
 

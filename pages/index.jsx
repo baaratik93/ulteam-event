@@ -3,6 +3,7 @@ import fakeEvents from '../utils/fakeEvents';
 import {Container, SimpleGrid, Heading, VStack} from '@chakra-ui/react'
 import SingleEvent from '../components/events/SingleEvent'
 import ev from '../utils/fakeEvents'
+import useAuth from '../hook/AuthContext'
 export const getServerSideProps = async () => {
   
   const responses = await fetch('http://localhost:3000/api/events/events').then(data => {
@@ -12,7 +13,7 @@ export const getServerSideProps = async () => {
   })
   return {
    props: {
-     events: await ev
+     events: responses
    }
  }
 
@@ -20,7 +21,7 @@ export const getServerSideProps = async () => {
 }
 
 export default function Home({events}) {
- 
+ const {user} = useAuth()
   return <VStack>
       <Head>
         <title>ULTeam | A la une</title>
@@ -31,6 +32,7 @@ export default function Home({events}) {
         <Heading m="1rem" textAlign='center' color="green">
           A la une des événements sur ULTEAMEVENTS
         </Heading>
+        {console.log(user)}
       <SimpleGrid gap={3} gridTemplateColumns={
         ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr']
       }>
