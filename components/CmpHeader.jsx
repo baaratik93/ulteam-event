@@ -15,6 +15,8 @@ import ListMenu from './ListMenu'
 import styled from '@emotion/styled'
 import useAuth from '../hook/AuthContext';
 import Logout from './Logout'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 const styleHeader = styled.div(`
   position: sticky;
@@ -27,11 +29,11 @@ function CmpHeader() {
 	const {colorMode} = useColorMode()
 	const headerBg = {
 		dark: 'teal.700',
-		light: 'teal.300'
+		light: 'teal.200'
 	}
 	const LogoBG = {
-		dark: 'orange.300',
-		light: 'orange'
+		dark: 'orange.500',
+		light: 'orange.300'
 	}
 	return <HStack as={styleHeader} p={4} bg={headerBg[colorMode]}>
 				<NextLink href="/">
@@ -41,9 +43,15 @@ function CmpHeader() {
 				<ListMenu/>
 				<Spacer/>
 				<DarkMode/>
-				{ user ?
-				<Logout/> :
-				<Button rightIcon={<PhoneIcon/>} bg={LogoBG[colorMode]}><NextLink href="/auth/login">Login</NextLink></Button>
+				{ user && user.emailVerified ? "" :
+				<Button
+				   rightIcon={<FontAwesomeIcon icon={faPowerOff} style={{ color: "teal.800" }} />}
+				   bg={LogoBG[colorMode]}>
+				   <NextLink href="/auth/login">
+				       Login
+				    </NextLink>
+				 </Button>
+		
 				}
 				<HamburgerMenu/>
 			</HStack>

@@ -1,6 +1,5 @@
 import {Box} from '@chakra-ui/react'
 import useAuth from '../../hook/AuthContext'
-
 function Dashboard () {
 const {user} = useAuth()
 if (user !== null) {
@@ -11,7 +10,7 @@ return <>
         { user.nom }
         <h2>{ user.email }</h2>
         <h2>{ user.photo }</h2>
-        <h2>{ user.verified }</h2>
+        <h2>{ user.emailVerified }</h2>
         <h2>{ user.uid }</h2>
     </Box>
 </>

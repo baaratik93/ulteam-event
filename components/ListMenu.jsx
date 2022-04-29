@@ -1,5 +1,7 @@
 import menus from '../utils/menus'
 import NextLink from 'next/link'
+import Logout from './Logout.jsx'
+import useAuth from '../hook/AuthContext.js'
 import {
     List,
     UnorderedList,
@@ -8,6 +10,7 @@ import {
     ListItem
 } from '@chakra-ui/react'
 function ListMenu() {
+	const { user } = useAuth()
     return (
         <List as={UnorderedList} gap={8} display={['none','none', 'flex','flex']} p='10px 30px' borderRadius='3xl'>
         {
@@ -19,6 +22,11 @@ function ListMenu() {
                             </ListItem>)
                 })
             }
+	    {
+		    user && user.emailVerified ? <ListItem>
+			<Logout/>
+	    	    </ListItem> : ""
+	    }
         </List>
     )
 }
