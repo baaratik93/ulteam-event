@@ -1,16 +1,24 @@
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { useEffect, useState } from "react";
 import useAuth from "../hook/AuthContext";
 
-function Loader ({Component}) {
-    const { user } = useAuth()
+function Loader ({children}) {
+    const { setUser } = useAuth()
     const [loading, setLoding] = useState(true);
+    const auth = getAuth()
+    
+    
     useEffect(() =>{
-        user && setLoding(false)
+        onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser)
+            setLoding(false)
+        })
     },[]);
-    if (!user) {
+
+    if (loading) {
         return <h1>Loading...</h1>
     }
-    return Component
+    return children
 }
 
 export default Loader;

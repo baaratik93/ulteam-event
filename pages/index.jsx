@@ -32,7 +32,6 @@ export default function Home({events}) {
         <Heading m="1rem" textAlign='center' color="green">
           A la une des événements sur ULTEAMEVENTS
         </Heading>
-        {console.log(user)}
       <SimpleGrid gap={3} gridTemplateColumns={
         ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr']
       }>

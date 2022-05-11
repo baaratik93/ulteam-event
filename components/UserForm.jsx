@@ -8,7 +8,7 @@ function UserForm({onSubmitUser, isRegister}) {
 	const password = useRef()
 	const cpassword = useRef()
 	const authHandler = (e) => {
-		e.preventDefault();
+		// e.preventDefault();
         onSubmitUser({
 		login: login.current.value,
 		password: password.current.value,

@@ -1,4 +1,4 @@
-import { onAuthStateChanged, getAuth, sendEmailVerification, } from 'firebase/auth'
+import { getAuth, sendEmailVerification, onAuthStateChanged} from 'firebase/auth'
 import { createContext, useContext, useState } from 'react'
 import FireBaseAuth from '../services/FireBaseAuth'
 
@@ -13,15 +13,12 @@ export function AuthProvider(props) {
     const [user, setUser] = useState(null)
     const [error, setError] = useState("" )
 
-    onAuthStateChanged(auth, (usered) => {
-        setUser(usered)
-    })
-
 
     const loginWithUserAndPassword = async (userTaped) => {
         const {error, user  } = await FireBaseAuth.Login(userTaped)
         setUser(user ?? null)
         setError(error ?? "")
+        // return user ? user : error
     }
 
     const signWithUserAndPassword = async (userTaped) => {
@@ -38,7 +35,7 @@ export function AuthProvider(props) {
         setUser(null)
     }
 
-    const value = { user, error, setError, loginWithUserAndPassword, signWithUserAndPassword, logout}
+    const value = { user, error, setError,  setUser, loginWithUserAndPassword, signWithUserAndPassword, logout}
 
     return <authContext.Provider value={value} { ...props }/>
 }
